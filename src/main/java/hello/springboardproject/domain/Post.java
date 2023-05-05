@@ -1,4 +1,4 @@
-package hello.springboardproject.domain.post;
+package hello.springboardproject.domain;
 
 import lombok.Getter;
 import lombok.Setter;
