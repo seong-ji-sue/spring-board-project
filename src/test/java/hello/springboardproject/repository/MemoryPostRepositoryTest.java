@@ -5,6 +5,7 @@ import hello.springboardproject.repository.MemoryPostRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -30,20 +31,6 @@ public class MemoryPostRepositoryTest {
 
     }
 
-//    @Test
-//    public void findByTitle() {
-//        //given
-//        Post post1 = new Post("제목1", "내용1");
-//        Post post2 = new Post("제목2", "내용2");
-//
-//        memoryPostRepository.save(post1);
-//        memoryPostRepository.save(post2);
-//
-//        //when
-//        Post result = memoryPostRepository.findByTitle("제목1").get();
-//        //then
-//        Assertions.assertThat(result).isEqualTo(post1);
-//    }
 
     @Test
     void findAll() {

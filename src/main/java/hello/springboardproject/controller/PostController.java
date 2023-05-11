@@ -3,6 +3,8 @@ package hello.springboardproject.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hello.springboardproject.domain.Post;
 import hello.springboardproject.repository.MemoryPostRepository;
+import hello.springboardproject.repository.PostRepository;
+import hello.springboardproject.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,48 +17,42 @@ import java.util.List;
 @RequestMapping("/post")
 @RequiredArgsConstructor
 public class PostController {
-    private final MemoryPostRepository postRepository;
+
+    private final PostService postService;
     private ObjectMapper objectMapper = new ObjectMapper();
 
     //상품리스트
     @ResponseBody
     @GetMapping
-    public List<Post> posts(Model model) {
-        List<Post> posts = postRepository.findAll();
+    public List<Post> posts() {
+        List<Post> posts = postService.findPosts();
         return posts;
     }
 
     //상품 상세
     @ResponseBody
     @GetMapping("/{postId}")
-    public Post post(@PathVariable Long postId, Model model) {
-        Post post = postRepository.findById(postId).get();
+    public Post post(@PathVariable Long postId) {
+        Post post = postService.findOne(postId).get();
         return post;
     }
 
     //상품 등록
     @ResponseBody
     @PostMapping("/add")
-    public Post addPost(@RequestBody Post post) {
-        Post savePost = postRepository.save(post);
-        return savePost;
+    public Long addPost(@RequestBody Post post) {
+        Long postId = postService.create(post);
+        return postId;
     }
 
     //상품 수정
     @ResponseBody
     @GetMapping("/{postId}/edit")
     public String editPost(@PathVariable Long postId, @RequestBody Post post) {
-        postRepository.update(postId, post);
+        postService.update(postId, post);
         return "ok";
     }
 
-    @PostConstruct
-    public void init() {
-        postRepository.save(new Post("제목1","내용1"));
-        postRepository.save(new Post("제목2","내용2"));
-        postRepository.save(new Post("제목3","내용3"));
-        postRepository.save(new Post("제목4","내용4"));
-        postRepository.save(new Post("제목5","내용5"));
-    }
+
 
 }
